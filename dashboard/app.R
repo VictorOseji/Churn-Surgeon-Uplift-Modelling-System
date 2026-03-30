@@ -11,78 +11,30 @@ suppressPackageStartupMessages({
 })
 lapply(list.files(here("R"), "\\.R$", recursive=TRUE, full.names=TRUE), source)
 
-CSS <- "
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Sans:wght@300;400;600&family=Barlow+Condensed:wght@500;700&display=swap');
-:root{
-  --bg:#060A0C;--bg2:#09101380;--bg3:#0D1418;--surf:#111C22;
-  --bdr:#172530;--bdr2:#1F3340;
-  --cyan:#00C8C8;--cyan-l:#00E8E8;--cyan-d:#006464;
-  --green:#00C060;--green-l:#00E070;
-  --red:#E03030;--red-l:#FF4444;
-  --amber:#D08020;--amber-l:#F0A030;
-  --blue:#1A78C8;--blue-l:#2090E8;
-  --text:#B8D0D8;--text2:#60888C;--text3:#28404A;
-  --font-d:'Barlow Condensed',sans-serif;
-  --font-m:'IBM Plex Mono',monospace;
-  --font-b:'IBM Plex Sans',sans-serif;
-}
-*{box-sizing:border-box}
-html,body,.shiny-app{background:var(--bg)!important;color:var(--text)!important;font-family:var(--font-b)!important;font-size:14px}
-::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:var(--bg3)}::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:2px}
-.navbar{background:var(--bg3)!important;border-bottom:1px solid var(--cyan-d)!important;height:52px!important;padding:0!important}
-.navbar-brand{font-family:var(--font-d)!important;font-size:1.3rem!important;letter-spacing:.12em!important;color:var(--cyan-l)!important;padding:0 22px!important;height:52px!important;display:flex!important;align-items:center!important;border-right:1px solid var(--bdr)!important}
-.brand-sub{font-family:var(--font-m);font-size:.58rem;color:var(--text3);letter-spacing:.05em;margin-left:12px}
-.nav-link{font-family:var(--font-m)!important;font-size:.64rem!important;letter-spacing:.08em!important;text-transform:uppercase!important;color:var(--text3)!important;height:52px!important;display:flex!important;align-items:center!important;padding:0 18px!important;border-bottom:2px solid transparent!important;transition:all .2s!important}
-.nav-link:hover{color:var(--cyan)!important;border-bottom-color:var(--cyan-d)!important}
-.nav-link.active{color:var(--cyan-l)!important;border-bottom-color:var(--cyan-l)!important;background:rgba(0,200,200,.05)!important}
-.tab-pane{padding:18px 20px 40px;overflow-y:auto;max-height:calc(100vh - 52px)}
-.cs-card{background:var(--surf);border:1px solid var(--bdr);border-radius:5px;position:relative;overflow:hidden}
-.cs-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cyan);opacity:.6}
-.cs-card.c-green::before{background:var(--green-l)}.cs-card.c-red::before{background:var(--red-l)}
-.cs-card.c-amber::before{background:var(--amber-l)}.cs-card.c-blue::before{background:var(--blue-l)}
-.cs-head{font-family:var(--font-m);font-size:.64rem;letter-spacing:.10em;text-transform:uppercase;color:var(--cyan);padding:10px 14px 0;display:flex;justify-content:space-between;align-items:center}
-.cs-head.hg{color:var(--green-l)}.cs-head.hr{color:var(--red-l)}.cs-head.ha{color:var(--amber-l)}.cs-head.hb{color:var(--blue-l)}
-.cs-body{padding:12px 14px 14px}
-.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
-.kpi-tile{background:var(--surf);border:1px solid var(--bdr);border-radius:4px;padding:12px 14px;position:relative}
-.kpi-tile::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px}
-.kc::after{background:var(--cyan)}.kg::after{background:var(--green-l)}.kr::after{background:var(--red-l)}.ka::after{background:var(--amber-l)}.kb::after{background:var(--blue-l)}
-.kl{font-family:var(--font-m);font-size:.60rem;letter-spacing:.10em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
-.kv{font-family:var(--font-d);font-size:1.7rem;color:var(--text);line-height:1;letter-spacing:.06em}
-.ks{font-family:var(--font-m);font-size:.60rem;color:var(--text3)}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.g7-5{display:grid;grid-template-columns:7fr 5fr;gap:12px}.g5-7{display:grid;grid-template-columns:5fr 7fr;gap:12px}
-.mb12{margin-bottom:12px}
-.rg-badge{display:inline-block;padding:2px 8px;border-radius:3px;font-family:var(--font-m);font-size:.60rem;font-weight:500}
-.rg-Persuadable{background:rgba(0,192,96,.18);color:var(--green-l)}
-.rg-Sure\ Thing{background:rgba(26,120,200,.18);color:var(--blue-l)}
-.rg-Lost\ Cause{background:rgba(224,48,48,.18);color:var(--red-l)}
-.rg-Sleeping\ Dog{background:rgba(208,128,32,.18);color:var(--amber-l)}
-.rg-Marginal{background:rgba(100,136,140,.18);color:var(--text2)}
-table.dataTable{background:var(--surf)!important;color:var(--text)!important;font-family:var(--font-m)!important;font-size:.74rem!important}
-table.dataTable thead th{background:var(--bg3)!important;color:var(--cyan)!important;font-size:.62rem!important;letter-spacing:.08em!important;text-transform:uppercase!important;border-bottom:1px solid var(--bdr)!important}
-table.dataTable tbody tr:hover{background:var(--bg3)!important}
-table.dataTable tbody td{border-color:var(--bdr)!important}
-.dataTables_info,.dataTables_length,.dataTables_filter{color:var(--text3)!important;font-family:var(--font-m)!important;font-size:.68rem!important}
-.dataTables_wrapper .dataTables_filter input,.dataTables_wrapper .dataTables_length select{background:var(--bg3)!important;border:1px solid var(--bdr)!important;color:var(--text)!important;font-family:var(--font-m)!important;border-radius:3px}
-.form-label,label{font-family:var(--font-m)!important;font-size:.62rem!important;color:var(--text3)!important;letter-spacing:.06em!important;text-transform:uppercase!important}
-.selectize-control .selectize-input{background:var(--bg3)!important;border:1px solid var(--bdr)!important;color:var(--text)!important;font-family:var(--font-m)!important}
-.selectize-dropdown{background:var(--bg3)!important;border-color:var(--bdr2)!important}
-.btn-primary{background:var(--cyan)!important;border-color:var(--cyan)!important;color:var(--bg)!important;font-family:var(--font-m)!important;font-size:.68rem!important;letter-spacing:.06em!important;border-radius:3px!important;font-weight:500!important}
-.form-range::-webkit-slider-thumb{background:var(--cyan-l)!important}
-.form-range::-webkit-slider-runnable-track{background:var(--bdr)!important}
-pre.report-box{background:var(--bg3);border:1px solid var(--bdr);border-radius:4px;padding:14px;font-family:var(--font-m);font-size:.75rem;color:var(--text);white-space:pre-wrap}
-"
-
 pt <- function(p, ...) {
   p |> layout(
-    paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(9,16,20,1)",
-    font=list(family="IBM Plex Mono", color="#60888C", size=10),
-    xaxis=list(gridcolor="#172530",zerolinecolor="#172530",linecolor="#172530",tickfont=list(size=9)),
-    yaxis=list(gridcolor="#172530",zerolinecolor="#172530",linecolor="#172530",tickfont=list(size=9)),
-    legend=list(bgcolor="rgba(0,0,0,0)",font=list(size=9)),
-    margin=list(l=52,r=18,t=20,b=48),...) |>
-    config(displayModeBar=FALSE)
+    paper_bgcolor = "rgba(0,0,0,0)", 
+    plot_bgcolor = "#FFFFFF",
+    font = list(family = "IBM Plex Mono", color = "#1E293B", size = 10),
+    xaxis = list(
+      gridcolor = "#E1E5EB", 
+      zerolinecolor = "#CBD2DC", 
+      linecolor = "#E1E5EB", 
+      tickfont = list(size = 9, color = "#64748B")
+    ),
+    yaxis = list(
+      gridcolor = "#E1E5EB", 
+      zerolinecolor = "#CBD2DC", 
+      linecolor = "#E1E5EB", 
+      tickfont = list(size = 9, color = "#64748B")
+    ),
+    legend = list(
+      bgcolor = "rgba(0,0,0,0)", 
+      font = list(size = 9, color = "#1E293B")
+    ),
+    margin = list(l = 52, r = 18, t = 20, b = 48), ...
+  ) |>
+    config(displayModeBar = FALSE)
 }
 
 RG_COLS <- c(Persuadable="#00C060",`Sure Thing`="#1A78C8",
@@ -100,18 +52,25 @@ ae   <- cs$action()
 psm  <- cs$ps_est()
 cust_ids <- fc$customer_id
 
-tile <- function(lbl,val,sub,cl)
-  div(class=paste("kpi-tile",cl),div(class="kl",lbl),div(class="kv",val),div(class="ks",sub))
+tile <- function(lbl,val,sub,cl){
+  div(class=paste("kpi-tile",cl),
+      div(class="kl",lbl),
+      div(class="kv",val),
+      div(class="ks",sub)
+      )
+}
 
+
+## ======= USER INPUT INTERFACE ==========================================
 ui <- tagList(
-  tags$head(tags$style(CSS)),
+  tags$head(includeCSS(here::here("dashboard","www","styling.css"))),
   page_navbar(
-    title=tagList(
+    title = tagList(
       tags$span("CHURN SURGEON", style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;color:#00E8E8;letter-spacing:.12em;"),
       tags$span("UPLIFT MODELLING SYSTEM",class="brand-sub")
     ),
     window_title="Churn Surgeon",
-    theme=bs_theme(bg="#060A0C",fg="#B8D0D8",primary="#00C8C8",bootswatch=NULL),
+    theme = bs_theme(fg = "#060A0C", bg = "#B8D0D8", primary = "#00C8C8", bootswatch = NULL),
     fillable=FALSE,
 
     # ── 1. OR THEATRE ─────────────────────────────────────────────────────────
@@ -121,26 +80,32 @@ ui <- tagList(
         div(class="g7-5 mb12",
           div(class="cs-card",
             div(class="cs-head","Qini Curve — Incremental Uplift vs Targeting Rate"),
-            div(class="cs-body",plotlyOutput("or_qini",height="300px"))),
+            div(class="cs-body",plotlyOutput("or_qini",height="300px"))
+            ),
           div(style="display:flex;flex-direction:column;gap:12px;",
             div(class="cs-card c-green",
               div(class="cs-head hg","Response Group Distribution"),
-              div(class="cs-body",plotlyOutput("or_rg_donut",height="190px"))),
+              div(class="cs-body",plotlyOutput("or_rg_donut",height="190px"))
+              ),
             div(class="cs-card c-red",
               div(class="cs-head hr","At-Risk Summary"),
-              div(class="cs-body",uiOutput("or_risk_panel")))
+              div(class="cs-body",uiOutput("or_risk_panel"))
+              )
           )
         ),
         div(class="g3",
           div(class="cs-card",
             div(class="cs-head","Uplift Score Distribution"),
-            div(class="cs-body",plotlyOutput("or_tau_dist",height="190px"))),
+            div(class="cs-body",plotlyOutput("or_tau_dist",height="190px"))
+            ),
           div(class="cs-card c-amber",
             div(class="cs-head ha","Decile Monotonicity Test"),
-            div(class="cs-body",plotlyOutput("or_deciles",height="190px"))),
+            div(class="cs-body",plotlyOutput("or_deciles",height="190px"))
+            ),
           div(class="cs-card c-blue",
             div(class="cs-head hb","Policy Value Curve"),
-            div(class="cs-body",plotlyOutput("or_policy",height="190px")))
+            div(class="cs-body",plotlyOutput("or_policy",height="190px"))
+            )
         )
       )
     ),
@@ -269,6 +234,7 @@ ui <- tagList(
   )
 )
 
+## ===== SERVER LOGIC INTERFACE ====================================
 server <- function(input, output, session) {
 
   # ─── 1. OR THEATRE ──────────────────────────────────────────────────────────
@@ -316,11 +282,19 @@ server <- function(input, output, session) {
   })
 
   output$or_tau_dist <- renderPlotly({
-    plot_ly(fc,x=~tau_ensemble,color=~pred_group,colors=RG_COLS,
-      type="histogram",nbinsx=50,opacity=.75)|>
-      add_lines(x=c(.05,.05),y=c(0,300),line=list(color="#00C8C8",dash="dash",width=1.5),showlegend=FALSE)|>
-    pt()|>layout(barmode="overlay",xaxis=list(title="Estimated ITE τ̂"),yaxis=list(title="Count"),
-                 legend=list(orientation="h",y=-.3))
+    
+    color <- RG_COLS[unique(fc$pred_group)]
+    
+    plot_ly(fc, x=~tau_ensemble, color=~pred_group, colors=color, type="histogram",
+            nbins=50, opacity=.75)|>
+      add_lines(x = c(.05,.05),y = c(0,300),
+                line=list(color="#00C8C8",dash="dash",width=1.5),
+                showlegend=FALSE) |>
+      pt() |>
+      layout(barmode="overlay",
+             xaxis = list(title="Estimated ITE τ̂")  ,
+             yaxis = list(title="Count"),
+             legend = list(orientation="h",y=-.3))
   })
 
   output$or_deciles <- renderPlotly({
